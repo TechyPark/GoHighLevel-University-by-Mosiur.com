@@ -164,7 +164,119 @@ GO HIGH LEVEL (GHL) DOCUMENTATION & TAGGING MASTERY SUMMARY:
   - Best Practice: Remove historical temporary/intent tags once a macro state shift occurs. For instance, removing "status:prospect" when adding "status:client" using Automation Workflow.
 `;
 
+// End-To-End Funnel Lead Tracking Database state
+let trackingStats = {
+  // Campaign Visits/Hits (Tracks how many people are accessing the funnel per campaign)
+  campaignVisits: {
+    "lead-magnet-q2": 325,
+    "crm-software-intent": 184,
+    "stoic-growth-post": 96,
+    "promo-tier-3": 120,
+    "direct-intake": 45,
+  } as Record<string, number>,
+
+  // Click tracking within pages (CTA elements interactions)
+  ctaClicks: {
+    "cta-download-blueprint": 142,
+    "cta-book-strategy": 68,
+    "cta-view-pricing": 83,
+  } as Record<string, number>,
+
+  // Email opens
+  emailOpens: {
+    "fb-welcome-email": 115,
+    "google-blueprint-email": 87,
+    "appt-booking-email": 54,
+  } as Record<string, number>,
+
+  // Deliverables downloaded (materials conversions)
+  downloads: {
+    "scaling-blueprint-pdf": 94,
+    "agency-checklist-excel": 43,
+    "software-whitepaper-pdf": 38,
+  } as Record<string, number>,
+};
+
 // --- API ROUTES ---
+
+// Lead Tracking endpoints
+app.get("/api/tracking/stats", (req, res) => {
+  res.json(trackingStats);
+});
+
+app.post("/api/tracking/event", (req, res) => {
+  const { eventType, key, leadId } = req.body;
+  if (!eventType || !key) {
+    return res.status(400).json({ error: "eventType and key are required parameters." });
+  }
+
+  const timestampStr = () => new Date().toISOString().replace("T", " ").substring(0, 19);
+
+  // 1. Process stats increment
+  switch (eventType) {
+    case "visit":
+      trackingStats.campaignVisits[key] = (trackingStats.campaignVisits[key] || 0) + 1;
+      break;
+    case "click":
+      trackingStats.ctaClicks[key] = (trackingStats.ctaClicks[key] || 0) + 1;
+      break;
+    case "email_open":
+      trackingStats.emailOpens[key] = (trackingStats.emailOpens[key] || 0) + 1;
+      break;
+    case "download":
+      trackingStats.downloads[key] = (trackingStats.downloads[key] || 0) + 1;
+      break;
+    default:
+      return res.status(400).json({ error: `Invalid eventType: ${eventType}` });
+  }
+
+  // 2. Reflect on Lead if ID supplied
+  let updatedLead = null;
+  if (leadId) {
+    const leadIndex = leads.findIndex((l) => l.id === leadId);
+    if (leadIndex !== -1) {
+      const lead = leads[leadIndex];
+      let historyEventStr = "";
+      let newTag = "";
+
+      if (eventType === "visit") {
+        historyEventStr = `🌐 Web Session: Accessed landing funnel (campaign: ${key})`;
+        newTag = `act:visited-${key.substring(0, 12)}`;
+      } else if (eventType === "click") {
+        historyEventStr = `🖱️ Click Event: Interacted with button CTA "${key.replace("cta-", "")}"`;
+        newTag = `act:clicked-${key.replace("cta-", "")}`;
+      } else if (eventType === "email_open") {
+        historyEventStr = `📩 Email Read: Opened sequence follow-up template ("${key}")`;
+        newTag = "act:email-opened";
+      } else if (eventType === "download") {
+        historyEventStr = `💾 Asset Downloaded: Redeemed resource deliverable "${key}"`;
+        newTag = `asset:${key.split("-")[0] || "download"}`;
+      }
+
+      // Safe add tag
+      const existingTags = [...lead.tags];
+      if (newTag && !existingTags.includes(newTag)) {
+        existingTags.push(newTag);
+      }
+
+      leads[leadIndex] = {
+        ...lead,
+        tags: existingTags,
+        history: [
+          { date: timestampStr(), event: historyEventStr },
+          ...lead.history
+        ]
+      };
+      updatedLead = leads[leadIndex];
+    }
+  }
+
+  res.json({
+    success: true,
+    trackingStats,
+    updatedLead
+  });
+});
 
 // Express CRM DB endpoints
 app.get("/api/leads", (req, res) => {

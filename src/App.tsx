@@ -34,6 +34,7 @@ import {
   AlertTriangle
 } from "lucide-react";
 import { Lead, Workflow, AcademyMessage, WorkflowAction } from "./types";
+import LeadTrackingSection from "./components/LeadTrackingSection";
 
 export default function App() {
   // Authentication & session variables
@@ -446,10 +447,10 @@ export default function App() {
       </header>
 
       {/* Main Bento Grid layout area */}
-      <main className="flex-1 p-4 lg:p-6 grid grid-cols-1 lg:grid-cols-12 gap-5 max-w-7xl mx-auto w-full">
+      <main className="flex-1 p-4 lg:p-6 grid grid-cols-1 md:grid-cols-12 xl:grid-cols-12 gap-5 max-w-[1600px] mx-auto w-full pb-20 auto-rows-min">
         
         {/* BANNER HEADER BOX (BENTO CARDS INTRO) - Span 12 */}
-        <section className="col-span-12 bg-slate-900 text-white rounded-3xl p-6 relative overflow-hidden shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-slate-800">
+        <section className="col-span-12 xl:col-span-12 order-none bg-slate-900 text-white rounded-3xl p-6 relative overflow-hidden shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-slate-800">
           <div className="absolute top-0 right-0 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl -z-10"></div>
           <div className="absolute -bottom-10 left-10 w-64 h-64 bg-teal-500/5 rounded-full blur-2xl -z-10"></div>
           
@@ -482,7 +483,7 @@ export default function App() {
         </section>
 
         {/* BENTO BOX 1: REAL-TIME LEADS CRM (Span 8 in responsive row) */}
-        <div className="col-span-12 lg:col-span-8 bg-white rounded-3xl border border-slate-200 shadow-xs p-5 sm:p-6 flex flex-col justify-between min-h-[500px]">
+        <div className="col-span-12 xl:col-span-5 xl:row-span-2 order-3 bg-white rounded-3xl border border-slate-200 shadow-sm p-5 sm:p-6 flex flex-col justify-between min-h-[500px]">
           <div>
             {/* Box Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-slate-100 mb-5">
@@ -628,15 +629,15 @@ export default function App() {
         </div>
 
         {/* BENTO BOX 2: WORKWORK ACTION TERMINAL & SIMULATOR (Span 4) */}
-        <div className="col-span-12 lg:col-span-4 bg-slate-900 text-white rounded-3xl border border-slate-800 shadow-lg p-5 sm:p-6 flex flex-col justify-between min-h-[500px]">
+        <div className="col-span-12 xl:col-span-3 xl:row-span-2 order-4 bg-blue-600 text-white rounded-3xl shadow-lg p-5 sm:p-6 flex flex-col justify-between min-h-[500px]">
           <div className="space-y-6">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+            <div className="flex items-center justify-between pb-3 border-b border-blue-500/30">
               <div className="flex items-center gap-2">
-                <Zap className="w-5 h-5 text-blue-500 animate-pulse" />
-                <h3 className="text-base font-bold text-white">Workflow & Agent Simulator</h3>
+                <Zap className="w-5 h-5 text-amber-300 animate-pulse" />
+                <h3 className="text-base font-bold text-white">Workflow Simulator</h3>
               </div>
-              <span className="text-[9px] bg-blue-500/10 text-blue-400 font-mono px-2 py-0.5 rounded border border-blue-500/20 uppercase font-black">
-                GHL Engine v2.5
+              <span className="text-[9px] bg-white/20 text-blue-50 font-mono px-2 py-0.5 rounded border border-white/10 uppercase font-black">
+                GHL Engine
               </span>
             </div>
 
@@ -728,7 +729,7 @@ export default function App() {
         </div>
 
         {/* BENTO BOX 3: SELECTED LEAD DETAILS & HISTORY DRAWER (Span 4) */}
-        <div className="col-span-12 md:col-span-6 lg:col-span-4 bg-white rounded-3xl border border-slate-200 shadow-xs p-5 flex flex-col justify-between min-h-[360px]">
+        <div className="col-span-12 md:col-span-6 xl:col-span-4 xl:row-span-2 order-5 bg-white rounded-3xl border border-slate-200 shadow-xs p-5 flex flex-col justify-between min-h-[360px]">
           <div className="space-y-4">
             <div className="flex justify-between items-center pb-3 border-b border-slate-150">
               <h3 className="font-extrabold text-sm text-slate-900 flex items-center gap-2">
@@ -825,7 +826,7 @@ export default function App() {
         </div>
 
         {/* BENTO BOX 4: STANDARDIZED TAG GENERAL & SANITIZER (Span 4) */}
-        <div className="col-span-12 md:col-span-6 lg:col-span-4 bg-white rounded-3xl border border-slate-200 shadow-xs p-5 flex flex-col justify-between min-h-[360px]">
+        <div className="col-span-12 md:col-span-6 xl:col-span-4 xl:row-span-2 order-6 bg-white rounded-3xl border border-slate-200 shadow-xs p-5 flex flex-col justify-between min-h-[360px]">
           <div className="space-y-5">
             <div className="flex justify-between items-center pb-3 border-b border-slate-150">
               <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2">
@@ -897,7 +898,7 @@ export default function App() {
         </div>
 
         {/* BENTO BOX 5: GO-HIGH-LEVEL MAESTER AGENCY ROI CALCULATORS (Span 4) */}
-        <div className="col-span-12 md:col-span-6 lg:col-span-4 bg-white rounded-3xl border border-slate-200 shadow-xs p-5 flex flex-col justify-between min-h-[360px]">
+        <div className="col-span-12 md:col-span-6 xl:col-span-4 xl:row-span-2 order-7 bg-white rounded-3xl border border-slate-200 shadow-xs p-5 flex flex-col justify-between min-h-[360px]">
           <div className="space-y-4">
             <div className="flex justify-between items-center pb-3 border-b border-slate-150">
               <h3 className="font-extrabold text-sm text-slate-900 flex items-center gap-2">
@@ -976,46 +977,60 @@ export default function App() {
 
             {/* Scale calculations visual results */}
             <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100 text-[11px] space-y-1">
-              <div className="flex justify-between text-slate-500">
+              <div className="flex justify-between text-slate-400">
                 <span>Before GHL Profit:</span>
-                <span className="font-bold text-slate-700">${netCurrentProfit.toLocaleString()}</span>
+                <span className="font-bold text-slate-200">${netCurrentProfit.toLocaleString()}</span>
               </div>
-              <div className="flex justify-between text-blue-600 font-semibold">
+              <div className="flex justify-between text-teal-400 font-semibold">
                 <span>GHL Automation Profit:</span>
                 <span className="font-extrabold">${netGhlProfit.toLocaleString()}</span>
               </div>
-              <div className="flex justify-between border-t border-slate-200 pt-1 text-[11.5px] font-extrabold text-green-700">
+              <div className="flex justify-between border-t border-slate-700 pt-1 text-[11.5px] font-extrabold text-emerald-400">
                 <span>Scale Profit Boost:</span>
                 <span>+${scaleBoost.toLocaleString()}</span>
               </div>
             </div>
           </div>
 
-          <div className="mt-4 pt-4 border-t border-slate-150">
-            <div className="bg-blue-50 text-blue-700 px-3 py-2 rounded-xl text-[10px] leading-relaxed text-center font-semibold">
+          <div className="mt-4 pt-4 border-t border-slate-800">
+            <div className="bg-teal-500/10 text-teal-300 px-3 py-2 rounded-xl text-[10px] border border-teal-500/20 leading-relaxed text-center font-semibold">
               🚀 Automating lead follow-ups saves an estimated <strong>{savedHours} administration hours</strong> per month!
             </div>
           </div>
         </div>
 
-        {/* BENTO BOX 6: THE ACADEMY GROUNDED AI QA SYSTEM (Span 8) */}
-        <div id="academy-chat" className="col-span-12 bg-white rounded-3xl border border-slate-200 shadow-sm p-5 sm:p-6 flex flex-col justify-between min-h-[480px]">
-          <div>
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-slate-100 mb-5">
-              <div>
-                <h3 className="text-base sm:text-lg font-bold text-slate-950 flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 text-blue-600" />
-                  Mosiur AI Maester Academy
-                </h3>
-                <p className="text-xs text-slate-500">
-                  Ask questions trained directly on official GoHighLevel Help center and Developer API docs.
-                </p>
+        {/* BENTO BOX 6: END-TO-END FUNNEL LEAD TRACKING TELEMETRY (Span 12) */}
+        <LeadTrackingSection 
+          className="col-span-12 xl:col-span-8 xl:row-span-3 order-1"
+          leads={leads}
+          onLeadUpdated={fetchLeads}
+          selectedLeadForTracking={selectedLead}
+          onSelectLead={setSelectedLead}
+        />
+
+        {/* BENTO BOX 7: THE ACADEMY GROUNDED AI QA SYSTEM (Span 12) */}
+        <div id="academy-chat" className="col-span-12 xl:col-span-4 xl:row-span-5 order-2 bg-slate-900 rounded-3xl shadow-xl p-5 sm:p-6 flex flex-col justify-between min-h-[480px] relative overflow-hidden text-white">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl"></div>
+          <div className="relative z-10 flex-1 flex flex-col h-full">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-slate-800 mb-5">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full bg-blue-500 flex items-center justify-center animate-pulse shadow-lg shadow-blue-500/50 flex-shrink-0">
+                  <Sparkles className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+                    Mosiur AI Chat
+                  </h3>
+                  <p className="text-[10px] text-blue-300">
+                    Trained on GHL API Docs & Helps
+                  </p>
+                </div>
               </div>
 
               {/* Status Indicator */}
               <div className="flex items-center gap-2">
                 {isAuthenticated ? (
-                  <span className="text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-150 px-2.5 py-1 rounded-full flex items-center gap-1">
+                  <span className="text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2.5 py-1 rounded-full flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span> User Authenticated
                   </span>
                 ) : (

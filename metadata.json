@@ -1,0 +1,6 @@
+{
+  "name": "GoHighLevel Maester",
+  "description": "Premium GHL simulation tool with interactive CRM dashboard, custom analytics, automated multi-channel follow-up workflows, and an AI Academy trained on GHL docs.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
